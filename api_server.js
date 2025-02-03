@@ -16,10 +16,78 @@ const handleError = (res, err) => {
   console.error(err.message);
   res.status(500).send("Server error");
 };
-// Endpoint ทดสอบ
+// // Endpoint ทดสอบ
+// app.get("/", (req, res) => {
+//   res.send("Hello, LK HOUR🙋‍♂️!");
+// });
+
+//test API
 app.get("/", (req, res) => {
-  res.send("Hello, LK HOUR🙋‍♂️!");
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Welcome to LK Hour</title>
+      <style>
+        body {
+          font-family: 'Segoe UI', system-ui, sans-serif;
+          background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+          height: 100vh;
+          margin: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+        }
+        .container {
+          padding: 3rem;
+          background: rgba(255, 255, 255, 0.95);
+          border-radius: 1rem;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+          backdrop-filter: blur(10px);
+        }
+        h1 {
+          color: #2c3e50;
+          font-size: 2.5rem;
+          margin-bottom: 1rem;
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+        }
+        p {
+          color: #34495e;
+          font-size: 1.2rem;
+          margin-top: 1.5rem;
+        }
+        .emoji {
+          font-size: 2.2rem;
+          animation: fadeIn 1.5s ease-in;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>
+          <span class="emoji">👋</span>
+          Welcome to LK Hour!
+          <span class="emoji">🌟</span>
+        </h1>
+        <p>Your journey with premium timekeeping starts here</p>
+        <small style="color: #7f8c8d; margin-top: 2rem; display: block;">
+          Server timestamp: ${Date.now()} | Service: LK Hour Web Gateway
+        </small>
+      </div>
+    </body>
+    </html>
+  `);
 });
+
 // Login endpoint
 app.post("/login", async (req, res) => {
   const { email_mem, password_mem } = req.body;
