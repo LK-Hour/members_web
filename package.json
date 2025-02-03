@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"node api_server.js\" \"cd frontend && npm start\"",
+    "start": "node api_server.js",
     "dev": "nodemon api_server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
