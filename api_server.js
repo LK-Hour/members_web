@@ -137,40 +137,62 @@ app.post("/members/searchid", async (req, res) => {
 });
 // Add a new member
 app.post("/membersadd", async (req, res) => {
-  const {
-    name_mem,
-    email_mem,
-    password_mem,
-    sex_mem,
-    birthday_mem,
-    phone_mem,
-    address_mem,
-    zipcode_mem,
-    country_mem,
-  } = req.body;
   try {
-    await pool.query(
-      "INSERT INTO members (name_mem, email_mem, password_mem, " +
-        "sex_mem, birthday_mem, phone_mem, address_mem, zipcode_mem, country_mem) " +
-        "VALUES ($1, $2, $3, " +
-        "$4, $5, $6, $7, $8, $9)",
-      [
-        name_mem,
-        email_mem,
-        password_mem,
-        sex_mem,
-        birthday_mem,
-        phone_mem,
-        address_mem,
-        zipcode_mem,
-        country_mem,
-      ]
-    );
-    res.status(201).send("Member added");
-  } catch (err) {
-    handleError(res, err);
+    const {
+      name_mem,
+      email_mem,
+      password_mem,
+      sex_mem,
+      birthday_mem,
+      phone_mem,
+      address_mem,
+      zipcode_mem,
+    } = req.body;
+
+    // Input validation
+    if (!name_mem || !email_mem || !password_mem) {
+      return res.status(400).json({ error: "Required fields are missing" });
+    }
+
+    // Hash password before storing
+    const hashedPassword = await bcrypt.hash(password_mem, 10);
+
+    const query = `
+      INSERT INTO members (
+        name_mem, 
+        email_mem, 
+        password_mem, 
+        sex_mem, 
+        birthday_mem, 
+        phone_mem, 
+        address_mem, 
+        zipcode_mem
+      ) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
+      RETURNING *`;
+
+    const values = [
+      name_mem,
+      email_mem,
+      hashedPassword,
+      sex_mem,
+      birthday_mem,
+      phone_mem,
+      address_mem,
+      zipcode_mem,
+    ];
+
+    const result = await pool.query(query, values);
+    res.status(201).json({
+      message: "Member added successfully",
+      member: result.rows[0],
+    });
+  } catch (error) {
+    console.error("Error adding member:", error);
+    res.status(500).json({ error: "Failed to add member" });
   }
 });
+
 // Edit a member's data
 app.put("/membersedit", async (req, res) => {
   const {
