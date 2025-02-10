@@ -137,6 +137,7 @@ app.post("/members/searchid", async (req, res) => {
 // Add a new member
 app.post("/membersadd", async (req, res) => {
   const {
+    id_mem,
     name_mem,
     email_mem,
     password_mem,
@@ -149,11 +150,12 @@ app.post("/membersadd", async (req, res) => {
   } = req.body;
   try {
     await pool.query(
-      "INSERT INTO members (name_mem, email_mem, password_mem, " +
+      "INSERT INTO members (id_mem, name_mem, email_mem, password_mem, " +
         "sex_mem, birthday_mem, phone_mem, address_mem, zipcode_mem, country_mem) " +
         "VALUES ($1, $2, $3, " +
-        "$4, $5, $6, $7, $8, $9)",
+        "$4, $5, $6, $7, $8, $9, 10$)",
       [
+        id_mem,
         name_mem,
         email_mem,
         password_mem,
