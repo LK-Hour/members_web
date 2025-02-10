@@ -159,7 +159,6 @@ app.post("/membersadd", async (req, res) => {
         password_mem,
         sex_mem,
         birthday_mem,
-
         phone_mem,
         address_mem,
         zipcode_mem,

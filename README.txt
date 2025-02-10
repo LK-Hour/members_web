@@ -5,3 +5,6 @@ for now we upload our backend server to "Render":
 run front-end:
     cd front_end
     npm start
+
+GIT URL: https://github.com/LK-Hour/members_web
+WEB URL: https://members-web.onrender.com
