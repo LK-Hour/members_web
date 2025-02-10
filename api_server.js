@@ -194,6 +194,10 @@ app.post("/membersadd", async (req, res) => {
       country_mem,
     ];
 
+    // Log query and values
+    console.log("Query:", query);
+    console.log("Values:", values);
+
     const result = await pool.query(query, values);
     res.status(201).json({
       message: "Member added successfully",
