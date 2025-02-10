@@ -150,7 +150,7 @@ app.post("/membersadd", async (req, res) => {
     } = req.body;
 
     // Input validation
-    if (!name_mem || !email_mem || !password_mem) {
+    if (!id_mem || !name_mem || !email_mem || !password_mem) {
       return res.status(400).json({ error: "Required fields are missing" });
     }
 
