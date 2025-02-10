@@ -116,7 +116,7 @@ app.post("/members/search", async (req, res) => {
   const { name_mem } = req.body;
   try {
     const result = await pool.query(
-      "SELECT * FROM members WHERE name_mem ILIKE $1",
+      "SELECT * FROM members WHERE name_mem ILIKE $1 ORDER BY id_mem",
       [`%${name_mem}%`]
     );
     res.status(200).json(result.rows);
