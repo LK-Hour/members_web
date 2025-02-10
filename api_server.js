@@ -138,6 +138,8 @@ app.post("/members/searchid", async (req, res) => {
 // Add a new member
 app.post("/membersadd", async (req, res) => {
   try {
+    console.log("Received data:", req.body);
+
     const {
       name_mem,
       email_mem,
@@ -147,16 +149,27 @@ app.post("/membersadd", async (req, res) => {
       phone_mem,
       address_mem,
       zipcode_mem,
-      country_mem
+      country_mem,
     } = req.body;
 
+    // Log query and values
+    console.log("Query:", query);
+    console.log("Values:", values);
+
     // Input validation
-    if (!name_mem || !email_mem || !password_mem) {
+    if (
+      !name_mem ||
+      !email_mem ||
+      !password_mem ||
+      !sex_mem ||
+      !birthday_mem ||
+      !phone_mem ||
+      !address_mem ||
+      !zipcode_mem ||
+      !country_mem
+    ) {
       return res.status(400).json({ error: "Required fields are missing" });
     }
-
-    // Hash password before storing
-    const hashedPassword = await bcrypt.hash(password_mem, 10);
 
     const query = `
       INSERT INTO members (
@@ -170,19 +183,18 @@ app.post("/membersadd", async (req, res) => {
         zipcode_mem,
         country_mem
       ) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) 
-      RETURNING *`;
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
 
     const values = [
       name_mem,
       email_mem,
-      hashedPassword,
+      password_mem,
       sex_mem,
       birthday_mem,
       phone_mem,
       address_mem,
       zipcode_mem,
-      country_mem
+      country_mem,
     ];
 
     const result = await pool.query(query, values);
