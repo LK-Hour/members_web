@@ -147,6 +147,7 @@ app.post("/membersadd", async (req, res) => {
       phone_mem,
       address_mem,
       zipcode_mem,
+      country_mem
     } = req.body;
 
     // Input validation
@@ -166,9 +167,10 @@ app.post("/membersadd", async (req, res) => {
         birthday_mem, 
         phone_mem, 
         address_mem, 
-        zipcode_mem
+        zipcode_mem,
+        country_mem
       ) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) 
       RETURNING *`;
 
     const values = [
@@ -180,6 +182,7 @@ app.post("/membersadd", async (req, res) => {
       phone_mem,
       address_mem,
       zipcode_mem,
+      country_mem
     ];
 
     const result = await pool.query(query, values);
