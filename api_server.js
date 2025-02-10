@@ -11,6 +11,7 @@ const pool = new Pool({
     rejectUnauthorized: false,
   },
 });
+
 // Helper function for error handling
 const handleError = (res, err) => {
   console.error(err.message);
@@ -151,10 +152,6 @@ app.post("/membersadd", async (req, res) => {
       zipcode_mem,
       country_mem,
     } = req.body;
-
-    // Log query and values
-    console.log("Query:", query);
-    console.log("Values:", values);
 
     // Input validation
     if (
